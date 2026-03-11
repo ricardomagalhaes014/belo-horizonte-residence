@@ -479,6 +479,27 @@
       footer { flex-direction: column; text-align: center; }
     }
   </style>
+  <!-- Google Translate -->
+  <script type="text/javascript">
+    function googleTranslateElementInit() {
+      new google.translate.TranslateElement({
+        pageLanguage: 'pt',
+        includedLanguages: 'en,fr,es,de,it,zh-CN,ar,ru,ja,ko,nl',
+        layout: google.translate.TranslateElement.InlineLayout.SIMPLE,
+        autoDisplay: false
+      }, 'google_translate_element');
+    }
+  </script>
+  <style>
+    #google_translate_element { display: inline-flex; align-items: center; }
+    .goog-te-gadget { font-size: 0 !important; }
+    .goog-te-gadget .goog-te-combo { font-size: 0.65rem !important; background: transparent; border: 1px solid var(--gold-border); color: var(--cream); padding: 0.3rem 0.5rem; cursor: pointer; outline: none; }
+    .goog-te-gadget .goog-te-combo option { background: #141414; color: var(--cream); }
+    .goog-logo-link, .goog-te-gadget span { display: none !important; }
+    .skiptranslate iframe { display: none !important; }
+    body { top: 0 !important; }
+    .goog-te-banner-frame { display: none !important; }
+  </style>
 </head>
 <body>
 
@@ -496,6 +517,7 @@
     <li><a href="#pagamento">Pagamento</a></li>
     <li><a href="#acabamentos">Acabamentos</a></li>
   </ul>
+  <div id="google_translate_element" style="margin-right:1rem;"></div>
   <a href="#contacto" class="nav-cta">Saber Mais</a>
   <button class="nav-mobile-btn" onclick="toggleMenu()">
     <span></span><span></span><span></span>
@@ -910,22 +932,35 @@
 </section>
 
 <!-- ─── SIMULADOR ─── -->
-<section id="simulador">
+<section id="simulador" style="background:var(--black);">
   <div class="container">
     <div class="simulador-wrap">
       <div class="simulador-bg-text">€</div>
       <div class="simulador-content">
         <div>
           <div class="section-tag">Simulador</div>
-          <h2 class="simulador-title">Calcule a sua<br><em>prestação mensal</em></h2>
-          <p class="simulador-text">Saiba exactamente quanto vai pagar por mês com o nosso simulador de crédito habitação. Introduza o valor do imóvel, a entrada e o prazo — e obtenha uma estimativa personalizada em segundos.</p>
-          <p class="simulador-text" style="margin-top:0.75rem;">A DPS Imobiliária trabalha com os principais bancos do mercado para garantir as melhores condições de financiamento para os seus clientes.</p>
+          <h2 class="simulador-title">Simule a sua<br><em>Cedência de Contrato</em></h2>
+          <p class="simulador-text">Saiba exactamente quanto pode ganhar ao ceder a sua posição neste empreendimento. Introduza o valor investido, o número de meses que pretende vender e a previsão de valorização — e obtenha uma estimativa de retorno em três perspectivas.</p>
+          <div style="display:flex;flex-direction:column;gap:0.6rem;margin-top:1.25rem;">
+            <div style="display:flex;align-items:center;gap:0.75rem;padding:0.75rem 1rem;background:rgba(201,168,76,0.06);border-left:2px solid var(--gold);">
+              <span style="font-size:1rem;">🟢</span>
+              <div><div style="font-size:0.65rem;font-weight:600;letter-spacing:0.1em;text-transform:uppercase;color:var(--gold);">Perspectiva Optimista</div><div style="font-size:0.75rem;color:var(--cream-dim);">Valorização máxima esperada com venda no prazo ideal</div></div>
+            </div>
+            <div style="display:flex;align-items:center;gap:0.75rem;padding:0.75rem 1rem;background:rgba(201,168,76,0.04);border-left:2px solid rgba(201,168,76,0.4);">
+              <span style="font-size:1rem;">🟡</span>
+              <div><div style="font-size:0.65rem;font-weight:600;letter-spacing:0.1em;text-transform:uppercase;color:rgba(201,168,76,0.7);">Perspectiva Conservadora</div><div style="font-size:0.75rem;color:var(--cream-dim);">Estimativa realista com margem de segurança</div></div>
+            </div>
+            <div style="display:flex;align-items:center;gap:0.75rem;padding:0.75rem 1rem;background:rgba(201,168,76,0.02);border-left:2px solid rgba(201,168,76,0.2);">
+              <span style="font-size:1rem;">🔴</span>
+              <div><div style="font-size:0.65rem;font-weight:600;letter-spacing:0.1em;text-transform:uppercase;color:rgba(201,168,76,0.5);">Ultra-Conservadora</div><div style="font-size:0.75rem;color:var(--cream-dim);">Cenário mínimo garantido mesmo em condições adversas</div></div>
+            </div>
+          </div>
         </div>
         <div class="simulador-btn-wrap">
           <a href="#contacto" class="btn-simulador" id="btnSimulador">
-            <span class="btn-simulador-icon">🧮</span>
+            <span class="btn-simulador-icon">📊</span>
             <span>Simular Agora</span>
-            <span style="font-size:0.6rem;font-weight:400;letter-spacing:0.1em;opacity:0.8;">Crédito Habitação</span>
+            <span style="font-size:0.6rem;font-weight:400;letter-spacing:0.1em;opacity:0.8;">Cedência de Contrato</span>
           </a>
         </div>
       </div>
@@ -1036,8 +1071,8 @@
             <div class="dps-stat-lbl">Taxa de Sucesso</div>
           </div>
           <div class="dps-stat">
-            <div class="dps-stat-val">+500</div>
-            <div class="dps-stat-lbl">Imóveis Vendidos</div>
+            <div class="dps-stat-val">+25</div>
+            <div class="dps-stat-lbl">Imóveis Vendidos/Mês</div>
           </div>
           <div class="dps-stat">
             <div class="dps-stat-val">+10</div>
@@ -1221,5 +1256,6 @@
     if (links) links.style.display = links.style.display === 'flex' ? 'none' : 'flex';
   }
 </script>
+<script type="text/javascript" src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
 </body>
 </html>
