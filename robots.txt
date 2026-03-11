@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://belohorizonte.grupo-dps.com/sitemap.xml
