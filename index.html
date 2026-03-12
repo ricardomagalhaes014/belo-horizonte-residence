@@ -757,7 +757,24 @@
   var SHARE_URL = 'https://belohorizonte.grupo-dps.com/';
   var SHARE_TEXT = 'Belo Horizonte Residence — Novo empreendimento de luxo em Setúbal. T0 a T2 a partir de 175.000€. ';
 
+  // Botão principal: Web Share API no mobile, menu no desktop
   function toggleShare() {
+    // No mobile com Web Share API disponível, usar o menu nativo do sistema
+    if (navigator.share) {
+      navigator.share({
+        title: 'Belo Horizonte Residence',
+        text: SHARE_TEXT,
+        url: SHARE_URL
+      }).catch(function(err) {
+        if (err.name !== 'AbortError') showDesktopMenu();
+      });
+    } else {
+      // Desktop: mostrar menu de botões
+      showDesktopMenu();
+    }
+  }
+
+  function showDesktopMenu() {
     var items = document.getElementById('share-items');
     var btn = document.getElementById('share-toggle');
     if (items.style.display === 'none' || items.style.display === '') {
@@ -774,19 +791,40 @@
 
   function shareInstagram(e) {
     e.preventDefault();
-    navigator.clipboard.writeText(SHARE_URL).then(function() {
-      showToast('Link copiado! Cole nos Stories ou DM do Instagram.');
-    }).catch(function() {
-      prompt('Copie este link para partilhar no Instagram:', SHARE_URL);
-    });
+    // Tentar Web Share API primeiro (abre menu nativo com Instagram)
+    if (navigator.share) {
+      navigator.share({ title: 'Belo Horizonte Residence', text: SHARE_TEXT, url: SHARE_URL })
+        .catch(function() { copyToClipboard(); });
+    } else {
+      copyToClipboard();
+    }
   }
 
   function copyShareLink() {
-    navigator.clipboard.writeText(SHARE_URL).then(function() {
-      showToast('Link copiado!');
-    }).catch(function() {
-      prompt('Copie este link:', SHARE_URL);
-    });
+    copyToClipboard();
+  }
+
+  function copyToClipboard() {
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+      navigator.clipboard.writeText(SHARE_URL).then(function() {
+        showToast('Link copiado!');
+      }).catch(function() { fallbackCopy(); });
+    } else {
+      fallbackCopy();
+    }
+  }
+
+  function fallbackCopy() {
+    var ta = document.createElement('textarea');
+    ta.value = SHARE_URL;
+    ta.style.position = 'fixed';
+    ta.style.opacity = '0';
+    document.body.appendChild(ta);
+    ta.focus();
+    ta.select();
+    try { document.execCommand('copy'); showToast('Link copiado!'); }
+    catch(e) { prompt('Copie este link:', SHARE_URL); }
+    document.body.removeChild(ta);
   }
 
   function showToast(msg) {
