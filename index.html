@@ -680,7 +680,7 @@
   <div id="share-items" style="display:none;flex-direction:column;gap:2px;">
 
     <!-- Facebook -->
-    <a id="share-fb" href="#" target="_blank" title="Partilhar no Facebook" style="
+    <a id="share-fb" href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fbelohorizonte.grupo-dps.com%2F" target="_blank" rel="noopener" title="Partilhar no Facebook" style="
       width:44px;height:44px;background:#1877F2;
       display:flex;align-items:center;justify-content:center;
       color:#fff;font-size:1.1rem;text-decoration:none;
@@ -704,7 +704,7 @@
     </a>
 
     <!-- Instagram (abre DM) -->
-    <a id="share-ig" href="https://www.instagram.com/" target="_blank" title="Partilhar via Instagram" style="
+    <a id="share-ig" href="#" onclick="shareInstagram(event)" title="Copiar link para Instagram Stories" style="
       width:44px;height:44px;
       background:linear-gradient(45deg,#f09433,#e6683c,#dc2743,#cc2366,#bc1888);
       display:flex;align-items:center;justify-content:center;
@@ -754,15 +754,16 @@
 ">Link copiado!</div>
 
 <script>
+  var SHARE_URL = 'https://belohorizonte.grupo-dps.com/';
+  var SHARE_TEXT = 'Belo Horizonte Residence — Novo empreendimento de luxo em Setúbal. T0 a T2 a partir de 175.000€. ';
+
   function toggleShare() {
     var items = document.getElementById('share-items');
     var btn = document.getElementById('share-toggle');
-    var url = encodeURIComponent(window.location.href);
-    var text = encodeURIComponent('Belo Horizonte Residence — Novo empreendimento de luxo em Setúbal. T0 a T2 a partir de 175.000€. ');
     if (items.style.display === 'none' || items.style.display === '') {
-      document.getElementById('share-fb').href = 'https://www.facebook.com/sharer/sharer.php?u=' + url;
-      document.getElementById('share-wa').href = 'https://api.whatsapp.com/send?text=' + text + url;
-      document.getElementById('share-li').href = 'https://www.linkedin.com/sharing/share-offsite/?url=' + url;
+      document.getElementById('share-fb').href = 'https://www.facebook.com/sharer/sharer.php?u=' + encodeURIComponent(SHARE_URL);
+      document.getElementById('share-wa').href = 'https://api.whatsapp.com/send?text=' + encodeURIComponent(SHARE_TEXT + SHARE_URL);
+      document.getElementById('share-li').href = 'https://www.linkedin.com/sharing/share-offsite/?url=' + encodeURIComponent(SHARE_URL);
       items.style.display = 'flex';
       btn.style.borderRadius = '4px 0 0 0';
     } else {
@@ -770,12 +771,29 @@
       btn.style.borderRadius = '4px 0 0 4px';
     }
   }
-  function copyShareLink() {
-    navigator.clipboard.writeText(window.location.href).then(function() {
-      var t = document.getElementById('share-toast');
-      t.style.opacity = '1';
-      setTimeout(function(){ t.style.opacity = '0'; }, 2000);
+
+  function shareInstagram(e) {
+    e.preventDefault();
+    navigator.clipboard.writeText(SHARE_URL).then(function() {
+      showToast('Link copiado! Cole nos Stories ou DM do Instagram.');
+    }).catch(function() {
+      prompt('Copie este link para partilhar no Instagram:', SHARE_URL);
     });
+  }
+
+  function copyShareLink() {
+    navigator.clipboard.writeText(SHARE_URL).then(function() {
+      showToast('Link copiado!');
+    }).catch(function() {
+      prompt('Copie este link:', SHARE_URL);
+    });
+  }
+
+  function showToast(msg) {
+    var t = document.getElementById('share-toast');
+    t.textContent = msg;
+    t.style.opacity = '1';
+    setTimeout(function(){ t.style.opacity = '0'; }, 3000);
   }
 </script>
 
